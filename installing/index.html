@@ -163,20 +163,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../documentation/pipeline_operators/models/classifiers/ensemble/XGBClassifier/">XGBClassifier</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../documentation/pipeline_operators/models/classifiers/svm/SVC/">SVC</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../documentation/pipeline_operators/models/classifiers/nearest_neighbors/kNeighborsClassifier/">kNeighborsClassifier</a>
         
     </li>
@@ -185,6 +171,62 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../documentation/pipeline_operators/models/classifiers/linear_model/LogisticRegression/">LogisticRegression</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../documentation/pipeline_operators/models/classifiers/ensemble/AdaBoost/">AdaBoost</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../documentation/pipeline_operators/models/classifiers/ensemble/ExtraTrees/">ExtraTrees</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../documentation/pipeline_operators/models/classifiers/linear_model/PassiveAggressive/">PassiveAggressive</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../documentation/pipeline_operators/models/classifiers/naive_bayes/BernoulliNB/">BernoulliNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../documentation/pipeline_operators/models/classifiers/naive_bayes/GaussianNB/">GaussianNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../documentation/pipeline_operators/models/classifiers/naive_bayes/MultinomialNB/">MultinomialNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../documentation/pipeline_operators/models/classifiers/svm/LinearSVC/">LinearSVC</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../documentation/pipeline_operators/models/classifiers/ensemble/GradientBoostingClassifier/">GradientBoostingClassifier</a>
         
     </li>
 
@@ -412,16 +454,20 @@
 <p>DEAP</p>
 </li>
 <li>
-<p>XGBoost</p>
+<p>update_checker</p>
+</li>
+<li>
+<p>tqdm</p>
 </li>
 </ul>
-<p>Except for DEAP, all of the necessary Python packages can be installed via the <a href="https://www.continuum.io/downloads">Anaconda Python distribution</a>, which we strongly recommend that you use. We also strongly recommend that you use of Python 3 over Python 2 if you're given the choice.</p>
+<p>Most of the necessary Python packages can be installed via the <a href="https://www.continuum.io/downloads">Anaconda Python distribution</a>, which we strongly recommend that you use. We also strongly recommend that you use of Python 3 over Python 2 if you're given the choice.</p>
 <p>NumPy, SciPy, pandas, and scikit-learn can be installed in Anaconda via the command:</p>
 <pre><code class="Shell">conda install numpy scipy pandas scikit-learn
 </code></pre>
 
-<p>DEAP and XGBoost can be installed with <code>pip</code> via the command:</p>
-<pre><code class="Shell">pip install deap xgboost
+<p>DEAP, and TQDM (used for verbose TPOT runs) can be installed with <code>pip</code>
+via the command:</p>
+<pre><code class="Shell">pip install deap update_checker tqdm
 </code></pre>
 
 <p>Optional: For OS X users who want to use OpenMP-enabled compilers to install XGBoost, gcc-5.x.x can be installed with Homebrew: <code>brew install gcc --without-multilib</code>.</p>

@@ -137,6 +137,8 @@
                 
                     <li><a class="toctree-l4" href="#kernel-approximation">Kernel Approximation</a></li>
                 
+                    <li><a class="toctree-l4" href="#cluster">Cluster</a></li>
+                
             
             </ul>
         
@@ -176,20 +178,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="pipeline_operators/models/classifiers/ensemble/XGBClassifier/">XGBClassifier</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="pipeline_operators/models/classifiers/svm/SVC/">SVC</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="pipeline_operators/models/classifiers/nearest_neighbors/kNeighborsClassifier/">kNeighborsClassifier</a>
         
     </li>
@@ -198,6 +186,62 @@
             
     <li class="toctree-l1 ">
         <a class="" href="pipeline_operators/models/classifiers/linear_model/LogisticRegression/">LogisticRegression</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="pipeline_operators/models/classifiers/ensemble/AdaBoost/">AdaBoost</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="pipeline_operators/models/classifiers/ensemble/ExtraTrees/">ExtraTrees</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="pipeline_operators/models/classifiers/linear_model/PassiveAggressive/">PassiveAggressive</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="pipeline_operators/models/classifiers/naive_bayes/BernoulliNB/">BernoulliNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="pipeline_operators/models/classifiers/naive_bayes/GaussianNB/">GaussianNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="pipeline_operators/models/classifiers/naive_bayes/MultinomialNB/">MultinomialNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="pipeline_operators/models/classifiers/svm/LinearSVC/">LinearSVC</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="pipeline_operators/models/classifiers/ensemble/GradientBoostingClassifier/">GradientBoostingClassifier</a>
         
     </li>
 
@@ -419,11 +463,17 @@
 <h2 id="models">Models</h2>
 <ul>
 <li><a href="pipeline_operators/models/classifiers/tree/DecisionTreeClassifier/">pipeline_operators.models.tree.DecisionTreeClassifier</a></li>
+<li><a href="pipeline_operators/models/classifiers/svm/LinearSVC/">pipeline_operators.models.svm.DecisionTreeClassifier</a></li>
 <li><a href="pipeline_operators/models/classifiers/ensemble/RandomForestClassifier/">pipeline_operators.models.ensemble.RandomForestClassifier</a></li>
-<li><a href="../documentation/pipeline_operators/models/classifiers/ensemble/XGBClassifier">pipeline_operators.models.ensemble.XGBClassifier</a></li>
-<li><a href="pipeline_operators/models/classifiers/svm/SVC/">pipeline_operators.models.svm.SVC</a></li>
+<li><a href="pipeline_operators/models/classifiers/ensemble/GradientBoostingClassifier/">pipeline_operators.models.ensemble.GradientBoostingClassifier</a></li>
+<li><a href="pipeline_operators/models/classifiers/ensemble/ExtraTrees/">pipeline_operators.models.ensemble.ExtraTrees</a></li>
+<li><a href="pipeline_operators/models/classifiers/ensemble/AdaBoost/">pipeline_operators.models.ensemble.AdaBoost</a></li>
 <li><a href="pipeline_operators/models/classifiers/nearest_neighbors/kNeighborsClassifier/">pipeline_operators.models.nearest_neighbors.kNeighborsClassifier</a></li>
 <li><a href="pipeline_operators/models/classifiers/linear_model/LogisticRegression/">pipeline_operators.models.linear_model.LogisticRegression</a></li>
+<li><a href="pipeline_operators/models/classifiers/linear_model/PassiveAggressive/">pipeline_operators.models.linear_model.PassiveAggressive</a></li>
+<li><a href="pipeline_operators/models/classifiers/naive_bayes/BernoulliNB/">pipeline_operators.models.naive_bayes.BernoulliNB</a></li>
+<li><a href="pipeline_operators/models/classifiers/naive_bayes/MultinomialNB/">pipeline_operators.models.naive_bayes.MultinomialNB</a></li>
+<li><a href="pipeline_operators/models/classifiers/naive_bayes/GaussianNB/">pipeline_operators.models.naive_bayes.GaussianNB</a></li>
 </ul>
 <h2 id="feature-selection">Feature Selection</h2>
 <ul>
@@ -435,16 +485,26 @@
 <h2 id="pre-processing">Pre-processing</h2>
 <ul>
 <li><a href="pipeline_operators/preprocessing/PolynomialFeatures/">pipeline_operators.preprocessing.PolynomialFeatures</a></li>
+<li><a href="pipeline_operators/preprocessing/ZeroCount/">pipeline_operators.preprocessing.ZeroCount</a></li>
 <li><a href="pipeline_operators/preprocessing/scaling/StandardScaler/">pipeline_operators.preprocessing.scaling.StandardScaler</a></li>
 <li><a href="pipeline_operators/preprocessing/scaling/RobustScaler/">pipeline_operators.preprocessing.scaling.RobustScaler</a></li>
+<li><a href="pipeline_operators/preprocessing/scaling/MinMaxScaler/">pipeline_operators.preprocessing.scaling.MinMaxScaler</a></li>
+<li><a href="pipeline_operators/preprocessing/scaling/MaxAbsScaler/">pipeline_operators.preprocessing.scaling.MaxAbsScaler</a></li>
+<li><a href="pipeline_operators/preprocessing/scaling/Binarizer/">pipeline_operators.preprocessing.scaling.Binarizer</a></li>
 </ul>
 <h2 id="decomposition">Decomposition</h2>
 <ul>
 <li><a href="pipeline_operators/decomposition/RandomizedPCA/">pipeline_operators.decomposition.RandomizedPCA</a></li>
+<li><a href="pipeline_operators/decomposition/FastICA/">pipeline_operators.decomposition.FastICA</a></li>
 </ul>
 <h2 id="kernel-approximation">Kernel Approximation</h2>
 <ul>
 <li><a href="pipeline_operators/kernel_approximation/RBFSampler/">pipeline_operators.kernel_approximation.RBFSampler</a></li>
+<li><a href="pipeline_operators/kernel_approximation/Nystroem/">pipeline_operators.kernel_approximation.Nystroem</a></li>
+</ul>
+<h2 id="cluster">Cluster</h2>
+<ul>
+<li><a href="pipeline_operators/cluster/FeatureAgglomeration/">pipeline_operators.cluster.FeatureAgglomeration</a></li>
 </ul>
               
             </div>

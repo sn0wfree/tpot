@@ -155,20 +155,6 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../../ensemble/XGBClassifier/">XGBClassifier</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../svm/SVC/">SVC</a>
-        
-    </li>
-
-        
-            
     <li class="toctree-l1 current">
         <a class="current" href="./">kNeighborsClassifier</a>
         
@@ -193,6 +179,62 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../linear_model/LogisticRegression/">LogisticRegression</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ensemble/AdaBoost/">AdaBoost</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ensemble/ExtraTrees/">ExtraTrees</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../linear_model/PassiveAggressive/">PassiveAggressive</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../naive_bayes/BernoulliNB/">BernoulliNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../naive_bayes/GaussianNB/">GaussianNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../naive_bayes/MultinomialNB/">MultinomialNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../svm/LinearSVC/">LinearSVC</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ensemble/GradientBoostingClassifier/">GradientBoostingClassifier</a>
         
     </li>
 
@@ -420,6 +462,8 @@
     Input DataFrame for fitting the k-nearest neighbor classifier
 n_neighbors: int
     Number of neighbors to use by default for k_neighbors queries; must be a positive value
+weights: int
+        Selects a value from the list: ['uniform', 'distance']
 </code></pre>
 <h2 id="returns">Returns</h2>
 <pre><code>input_df: pandas.DataFrame {n_samples, n_features+['guess', 'group', 'class', 'SyntheticFeature']}
@@ -440,7 +484,7 @@ training_indices, testing_indices = train_test_split(tpot_data.index, stratify=t
 result1 = tpot_data.copy()
 
 # Perform classification with a k-nearest neighbor classifier
-knnc1 = KNeighborsClassifier(n_neighbors=2)
+knnc1 = KNeighborsClassifier(n_neighbors=2, weights='uniform')
 knnc1.fit(result1.loc[training_indices].drop('class', axis=1).values, result1.loc[training_indices, 'class'].values)
 result1['knnc1-classification'] = knnc1.predict(result1.drop('class', axis=1).values)
 
@@ -455,7 +499,7 @@ result1['knnc1-classification'] = knnc1.predict(result1.drop('class', axis=1).va
         <a href="../../linear_model/LogisticRegression/" class="btn btn-neutral float-right" title="LogisticRegression">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../svm/SVC/" class="btn btn-neutral" title="SVC"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../ensemble/RandomForestClassifier/" class="btn btn-neutral" title="RandomForestClassifier"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -485,7 +529,7 @@ result1['knnc1-classification'] = knnc1.predict(result1.drop('class', axis=1).va
           <a href="https://github.com/rhiever/tpot" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../../svm/SVC/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../ensemble/RandomForestClassifier/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../../linear_model/LogisticRegression/" style="color: #fcfcfc">Next &raquo;</a></span>

@@ -171,20 +171,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../ensemble/XGBClassifier/">XGBClassifier</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../svm/SVC/">SVC</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../nearest_neighbors/kNeighborsClassifier/">kNeighborsClassifier</a>
         
     </li>
@@ -193,6 +179,62 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../linear_model/LogisticRegression/">LogisticRegression</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ensemble/AdaBoost/">AdaBoost</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ensemble/ExtraTrees/">ExtraTrees</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../linear_model/PassiveAggressive/">PassiveAggressive</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../naive_bayes/BernoulliNB/">BernoulliNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../naive_bayes/GaussianNB/">GaussianNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../naive_bayes/MultinomialNB/">MultinomialNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../svm/LinearSVC/">LinearSVC</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ensemble/GradientBoostingClassifier/">GradientBoostingClassifier</a>
         
     </li>
 
@@ -418,10 +460,8 @@
 <h2 id="parameters">Parameters</h2>
 <pre><code>input_df: pandas.DataFrame {n_samples, n_features+['class', 'group', 'guess']}
     Input DataFrame for fitting the decision tree
-max_features: int
-    Number of features used to fit the decision tree; must be a positive value
-max_depth: int
-    Maximum depth of the decision tree; must be a positive value
+min_weight_fraction_leaf: float
+    The minimum weighted fraction of the input samples required to be at a leaf node.
 </code></pre>
 <h2 id="returns">Returns</h2>
 <pre><code>input_df: pandas.DataFrame {n_samples, n_features+['guess', 'group', 'class', 'SyntheticFeature']}
@@ -442,7 +482,7 @@ training_indices, testing_indices = train_test_split(tpot_data.index, stratify=t
 # Perform classification with a decision tree classifier
 result1 = tpot_data.copy()
 
-dtc1 = DecisionTreeClassifier(max_features='auto', max_depth=None)
+dtc1 = DecisionTreeClassifier(min_weight_fraction_leaf=0.1)
 dtc1.fit(result1.loc[training_indices].drop('class', axis=1).values, result1.loc[training_indices, 'class'].values)
 
 result1['dtc1-classification'] = dtc1.predict(result1.drop('class', axis=1).values)

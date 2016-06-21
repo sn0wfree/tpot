@@ -156,20 +156,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../models/classifiers/ensemble/XGBClassifier/">XGBClassifier</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../models/classifiers/svm/SVC/">SVC</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../models/classifiers/nearest_neighbors/kNeighborsClassifier/">kNeighborsClassifier</a>
         
     </li>
@@ -178,6 +164,62 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../models/classifiers/linear_model/LogisticRegression/">LogisticRegression</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../models/classifiers/ensemble/AdaBoost/">AdaBoost</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../models/classifiers/ensemble/ExtraTrees/">ExtraTrees</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../models/classifiers/linear_model/PassiveAggressive/">PassiveAggressive</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../models/classifiers/naive_bayes/BernoulliNB/">BernoulliNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../models/classifiers/naive_bayes/GaussianNB/">GaussianNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../models/classifiers/naive_bayes/MultinomialNB/">MultinomialNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../models/classifiers/svm/LinearSVC/">LinearSVC</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../models/classifiers/ensemble/GradientBoostingClassifier/">GradientBoostingClassifier</a>
         
     </li>
 
@@ -418,8 +460,6 @@
 <h2 id="parameters">Parameters</h2>
 <pre><code>input_df: pandas.DataFrame {n_samples, n_features+['class', 'group', 'guess']}
     Input DataFrame to scale
-n_components: int
-    The number of components to keep
 iterated_power: int
     Number of iterations for the power method. [1, 10]
 </code></pre>
@@ -444,7 +484,7 @@ training_features = tpot_data.loc[training_indices].drop('class', axis=1)
 
 if len(training_features.columns.values) &gt; 0:
     # RandomizedPCA must be fit on only the training data
-    pca = RandomizedPCA(n_components=1, iterated_power=10)
+    pca = RandomizedPCA(iterated_power=10)
     pca.fit(training_features.values.astype(np.float64))
     transformed_features = pca.transform(tpot_data.drop('class', axis=1).values.astype(np.float64))
 

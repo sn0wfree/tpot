@@ -8,7 +8,7 @@
   
   <meta name="author" content="Randal S. Olson">
   
-  <title>SVC - TPOT</title>
+  <title>BernoulliNB - TPOT</title>
   
 
   <link rel="shortcut icon" href="../../../../../../img/favicon.ico">
@@ -23,9 +23,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "SVC";
-    var mkdocs_page_input_path = "documentation/pipeline_operators/models/classifiers/svm/SVC.md";
-    var mkdocs_page_url = "/documentation/pipeline_operators/models/classifiers/svm/SVC/";
+    var mkdocs_page_name = "BernoulliNB";
+    var mkdocs_page_input_path = "documentation/pipeline_operators/models/classifiers/naive_bayes/BernoulliNB.md";
+    var mkdocs_page_url = "/documentation/pipeline_operators/models/classifiers/naive_bayes/BernoulliNB/";
   </script>
   
   <script src="../../../../../../js/jquery-2.1.1.min.js"></script>
@@ -156,18 +156,46 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../ensemble/XGBClassifier/">XGBClassifier</a>
+        <a class="" href="../../nearest_neighbors/kNeighborsClassifier/">kNeighborsClassifier</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../linear_model/LogisticRegression/">LogisticRegression</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ensemble/AdaBoost/">AdaBoost</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ensemble/ExtraTrees/">ExtraTrees</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../linear_model/PassiveAggressive/">PassiveAggressive</a>
         
     </li>
 
         
             
     <li class="toctree-l1 current">
-        <a class="current" href="./">SVC</a>
+        <a class="current" href="./">BernoulliNB</a>
         
             <ul>
             
-                <li class="toctree-l3"><a href="#c-support-vector-classifier">C-Support Vector Classifier</a></li>
+                <li class="toctree-l3"><a href="#bernoullinb-classifier">BernoulliNB Classifier</a></li>
                 
                     <li><a class="toctree-l4" href="#dependencies">Dependencies</a></li>
                 
@@ -185,14 +213,28 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../nearest_neighbors/kNeighborsClassifier/">kNeighborsClassifier</a>
+        <a class="" href="../GaussianNB/">GaussianNB</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../linear_model/LogisticRegression/">LogisticRegression</a>
+        <a class="" href="../MultinomialNB/">MultinomialNB</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../svm/LinearSVC/">LinearSVC</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../ensemble/GradientBoostingClassifier/">GradientBoostingClassifier</a>
         
     </li>
 
@@ -395,7 +437,7 @@
         
       
     
-    <li>SVC</li>
+    <li>BernoulliNB</li>
     <li class="wy-breadcrumbs-aside">
       
         
@@ -409,17 +451,19 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="c-support-vector-classifier">C-Support Vector Classifier</h1>
+                <h1 id="bernoullinb-classifier">BernoulliNB Classifier</h1>
 <hr />
-<p>Fits a C-Support Vector classifier.</p>
+<p>Fits a Naive Bayes classifier for multivariate Bernoulli models.</p>
 <h2 id="dependencies">Dependencies</h2>
-<pre><code>sklearn.svm.SVC
+<pre><code>sklearn.naive_bayes.BernoulliNB
 </code></pre>
 <h2 id="parameters">Parameters</h2>
 <pre><code>input_df: pandas.DataFrame {n_samples, n_features+['class', 'group', 'guess']}
-    Input DataFrame for fitting the C-support vector classifier
-C: float
-    Penalty parameter C of the error term; must be a positive value
+    Input DataFrame for fitting the classifier
+alpha: float
+    Additive (Laplace/Lidstone) smoothing parameter (0 for no smoothing).
+binarize: float
+    Threshold for binarizing (mapping to booleans) of sample features.
 </code></pre>
 <h2 id="returns">Returns</h2>
 <pre><code>input_df: pandas.DataFrame {n_samples, n_features+['guess', 'group', 'class', 'SyntheticFeature']}
@@ -430,7 +474,7 @@ C: float
 <pre><code class="Python">import numpy as np
 import pandas as pd
 from sklearn.cross_validation import train_test_split
-from sklearn.svm import SVC
+from sklearn.naive_bayes import BernoulliNB
 
 # NOTE: Make sure that the class is labeled 'class' in the data file
 tpot_data = pd.read_csv('PATH/TO/DATA/FILE', sep='COLUMN_SEPARATOR')
@@ -439,11 +483,10 @@ training_indices, testing_indices = train_test_split(tpot_data.index, stratify=t
 
 result1 = tpot_data.copy()
 
-# Perform classification with a C-support vector classifier
-svc1 = SVC(C=0.0001)
-svc1.fit(result1.loc[training_indices].drop('class', axis=1).values, result1.loc[training_indices, 'class'].values)
+bnb1 = BernoulliNB(alpha=0.01, binarize=1.0, fit_prior=True)
+bnb1.fit(result1.loc[training_indices].drop('class', axis=1).values, result1.loc[training_indices, 'class'].values)
 
-result1['svc1-classification'] = svc1.predict(result1.drop('class', axis=1).values)
+result1['bnb1-classification'] = bnb1.predict(result1.drop('class', axis=1).values)
 
 </code></pre>
               
@@ -453,10 +496,10 @@ result1['svc1-classification'] = svc1.predict(result1.drop('class', axis=1).valu
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../nearest_neighbors/kNeighborsClassifier/" class="btn btn-neutral float-right" title="kNeighborsClassifier">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../GaussianNB/" class="btn btn-neutral float-right" title="GaussianNB">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../ensemble/XGBClassifier/" class="btn btn-neutral" title="XGBClassifier"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../linear_model/PassiveAggressive/" class="btn btn-neutral" title="PassiveAggressive"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -486,10 +529,10 @@ result1['svc1-classification'] = svc1.predict(result1.drop('class', axis=1).valu
           <a href="https://github.com/rhiever/tpot" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../../ensemble/XGBClassifier/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../linear_model/PassiveAggressive/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../nearest_neighbors/kNeighborsClassifier/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../GaussianNB/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
