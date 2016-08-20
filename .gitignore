@@ -1,1 +1,6 @@
 tpot/*
+build/*
+dist/*
+TPOT.egg*
+
+*.pyc
