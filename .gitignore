@@ -1,0 +1,5 @@
+tpot/*
+build/*
+dist/*
+__pycache__/*
+TPOT.egg*
