@@ -1,22 +1,28 @@
 # -*- coding: utf-8 -*-
 
-"""
-Copyright 2016 Randal S. Olson
+"""This file is part of the TPOT library.
 
-This file is part of the TPOT library.
+TPOT was primarily developed at the University of Pennsylvania by:
+    - Randal S. Olson (rso@randalolson.com)
+    - Weixuan Fu (weixuanf@upenn.edu)
+    - Daniel Angell (dpa34@drexel.edu)
+    - and many more generous open source contributors
 
-The TPOT library is free software: you can redistribute it and/or
-modify it under the terms of the GNU General Public License as published by the
-Free Software Foundation, either version 3 of the License, or (at your option)
-any later version.
+TPOT is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation, either version 3 of
+the License, or (at your option) any later version.
 
-The TPOT library is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-details. You should have received a copy of the GNU General Public License along
-with the TPOT library. If not, see http://www.gnu.org/licenses/.
+TPOT is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with TPOT. If not, see <http://www.gnu.org/licenses/>.
 
 """
 
 from ._version import __version__
-from .tpot import TPOT, main
+from .tpot import TPOTClassifier, TPOTRegressor
+from .driver import main
