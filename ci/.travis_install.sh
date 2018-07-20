@@ -33,12 +33,13 @@ conda update --yes conda
 # provided versions
 if [[ "$LATEST" == "true" ]]; then
     conda create -n testenv --yes python=$PYTHON_VERSION pip nose \
-        numpy scipy scikit-learn cython
+        numpy scipy scikit-learn cython pandas
 else
     conda create -n testenv --yes python=$PYTHON_VERSION pip nose \
         numpy=$NUMPY_VERSION scipy=$SCIPY_VERSION \
         scikit-learn=$SKLEARN_VERSION \
-	cython
+	cython \
+  pandas
 fi
 
 source activate testenv
@@ -51,6 +52,8 @@ fi
 
 pip install update_checker
 pip install tqdm
+pip install stopit
+pip install xgboost
 
 if [[ "$COVERAGE" == "true" ]]; then
     pip install coverage coveralls
@@ -62,6 +65,9 @@ python -c "import numpy; print('numpy %s' % numpy.__version__)"
 python -c "import scipy; print('scipy %s' % scipy.__version__)"
 python -c "import sklearn; print('sklearn %s' % sklearn.__version__)"
 python -c "import deap; print('deap %s' % deap.__version__)"
+python -c "import xgboost; print('xgboost %s ' % xgboost.__version__)"
 python -c "import update_checker; print('update_checker %s' % update_checker.__version__)"
 python -c "import tqdm; print('tqdm %s' % tqdm.__version__)"
+python -c "import pandas; print('pandas %s' % pandas.__version__)"
+python -c "import stopit; print('stopit %s' % stopit.__version__)"
 python setup.py build_ext --inplace

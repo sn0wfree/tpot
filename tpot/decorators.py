@@ -1,71 +1,102 @@
 # -*- coding: utf-8 -*-
 
+"""This file is part of the TPOT library.
+
+TPOT was primarily developed at the University of Pennsylvania by:
+    - Randal S. Olson (rso@randalolson.com)
+    - Weixuan Fu (weixuanf@upenn.edu)
+    - Daniel Angell (dpa34@drexel.edu)
+    - and many more generous open source contributors
+
+TPOT is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as
+published by the Free Software Foundation, either version 3 of
+the License, or (at your option) any later version.
+
+TPOT is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with TPOT. If not, see <http://www.gnu.org/licenses/>.
+
 """
-Copyright 2016 Randal S. Olson
 
-This file is part of the TPOT library.
-
-The TPOT library is free software: you can redistribute it and/or
-modify it under the terms of the GNU General Public License as published by the
-Free Software Foundation, either version 3 of the License, or (at your option)
-any later version.
-
-The TPOT library is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-details. You should have received a copy of the GNU General Public License along
-with the TPOT library. If not, see http://www.gnu.org/licenses/.
-
-"""
-
+from __future__ import print_function
 from functools import wraps
+import warnings
+from sklearn.datasets import make_classification, make_regression
+from .export_utils import expr_to_tree, generate_pipeline_code
+from deap import creator
+
+NUM_TESTS = 10
+
+# generate a small data set for a new pipeline, in order to check if the pipeline
+# has unsuppported combinations in params
+pretest_X, pretest_y = make_classification(n_samples=50, n_features=10, random_state=42)
+pretest_X_reg, pretest_y_reg = make_regression(n_samples=50, n_features=10, random_state=42)
 
 
-def _gp_new_generation(func):
-    """Decorator that wraps functions that indicate the beginning of a new GP
-    generation.
+def _pre_test(func):
+    """Check if the wrapped function works with a pretest data set.
+
+    Reruns the wrapped function until it generates a good pipeline, for a max of
+    NUM_TESTS times.
 
     Parameters
     ----------
     func: function
-        The function being decorated
+        The decorated function.
 
     Returns
     -------
-    wrapped_func: function
+    check_pipeline: function
         A wrapper function around the func parameter
     """
     @wraps(func)
-    def wrapped_func(self, *args, **kwargs):
-        """Increment _gp_generation and bump pipeline count if necessary"""
-        ret = func(self, *args, **kwargs)
-        self._gp_generation += 1
+    def check_pipeline(self, *args, **kwargs):
+        bad_pipeline = True
+        num_test = 0  # number of tests
 
-        if not self._pbar.disable:
-            # Print only the best individual fitness
-            if self.verbosity == 2:
-                high_score = max([self._hof.keys[x].wvalues[1] for x in range(len(self._hof.keys))])
-                self._pbar.write('Generation {0} - Current best internal CV score: {1}'.format(self._gp_generation, high_score))
+        # a pool for workable pipeline
+        while bad_pipeline and num_test < NUM_TESTS:
+            # clone individual before each func call so it is not altered for
+            # the possible next cycle loop
+            args = [self._toolbox.clone(arg) if isinstance(arg, creator.Individual) else arg for arg in args]
 
-            # Print the entire Pareto front
-            elif self.verbosity == 3:
-                self._pbar.write('Generation {} - Current Pareto front scores:'.format(self._gp_generation))
-                for pipeline, pipeline_scores in zip(self._hof.items, reversed(self._hof.keys)):
-                    self._pbar.write('{}\t{}\t{}'.format(-pipeline_scores.wvalues[0],
-                                                         pipeline_scores.wvalues[1],
-                                                         pipeline))
-                self._pbar.write('')
+            try:
+                with warnings.catch_warnings():
+                    warnings.simplefilter('ignore')
 
-            # Sometimes the actual evaluated pipeline count does not match the
-            # supposed count because DEAP can cache pipelines. Here any missed
-            # evaluations are added back to the progress bar.
-            if self._pbar.n < self._gp_generation * self.population_size:
-                missing_pipelines = (self._gp_generation * self.population_size) - self._pbar.n
-                self._pbar.update(missing_pipelines)
+                    expr = func(self, *args, **kwargs)
+                    # mutation operator returns tuple (ind,); crossover operator
+                    # returns tuple of (ind1, ind2)
+                    expr_tuple = expr if isinstance(expr, tuple) else (expr,)
 
-            if not (self.max_time_mins is None) and self._pbar.n >= self._pbar.total:
-                self._pbar.total += self.population_size
+                    for expr_test in expr_tuple:
+                        pipeline_code = generate_pipeline_code(
+                            expr_to_tree(expr_test, self._pset),
+                            self.operators
+                        )
+                        sklearn_pipeline = eval(pipeline_code, self.operators_context)
 
-        return ret  # Pass back return value of func
+                        if self.classification:
+                            sklearn_pipeline.fit(pretest_X, pretest_y)
+                        else:
+                            sklearn_pipeline.fit(pretest_X_reg, pretest_y_reg)
+                        bad_pipeline = False
+            except BaseException as e:
+                message = '_pre_test decorator: {fname}: num_test={n} {e}'.format(
+                    n=num_test,
+                    fname=func.__name__,
+                    e=e
+                )
+                # Use the pbar output stream if it's active
+                self._update_pbar(pbar_num=0, pbar_msg=message)
+            finally:
+                num_test += 1
 
-    return wrapped_func
+        return expr
+
+    return check_pipeline
